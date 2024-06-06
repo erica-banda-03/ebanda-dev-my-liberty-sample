@@ -1,0 +1,67 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ebanda-dev-my-liberty-sample-service
+  description: 'The Liberty service for ebanda-dev-my-liberty-sample (Creates a Liberty getting started app)'
+  annotations:
+    argocd/app-name: ebanda-dev-my-liberty-sample-dev
+    backstage.io/kubernetes-id: ebanda-dev-my-liberty-sample
+    backstage.io/kubernetes-namespace: ebanda-dev
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-slug: erica-banda-03/ebanda-dev-my-liberty-sample
+    janus-idp.io/tekton : ebanda-dev-my-liberty-sample
+  labels:
+    backstage.io/kubernetes-id: ebanda-dev-my-liberty-sample
+  tags:
+    - java
+    - liberty
+    - maven
+    - book
+    - example
+  links:
+    - url: https://console-openshift-console.apps.665ddb5ed7bb17001ea31d67.cloud.techzone.ibm.com/dev-pipelines/ns/ebanda-dev/
+      title: Pipelines
+      icon: web
+    - url: https://console-openshift-console.apps.665ddb5ed7bb17001ea31d67.cloud.techzone.ibm.com/k8s/ns/ebanda-dev/deployments/ebanda-dev-my-liberty-sample
+      title: Deployment
+      icon: web
+    - url: https://openliberty.io/docs/latest/overview.html
+      title: Open Liberty Docs
+      icon: web
+spec:
+  type: service
+  lifecycle: production
+  owner: "user:default/erica-banda-03"
+  system: idp-system-ebanda-dev
+  providesApis:
+    - ebanda-dev-my-liberty-sample-api
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: idp-system-ebanda-dev
+  tags:
+    - rhdh
+    - book
+spec:
+  owner: "user:default/erica-banda-03"
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: ebanda-dev-my-liberty-sample-api
+  description: API surface exposed by the Liberty service
+  links:
+    - url: https://ebanda-dev-my-liberty-sample-ebanda-dev.apps.665ddb5ed7bb17001ea31d67.cloud.techzone.ibm.com/q/swagger-ui
+      title: Swagger UI
+      icon: web
+    - url: https://github.com/erica-banda-03/ebanda-dev-my-liberty-sample/-/blob/main/src/main/resources/META-INF/openapi.yaml
+      title: API Spec
+      icon: code
+spec:
+  type: openapi
+  lifecycle: production
+  owner: "user:default/erica-banda-03"
+  system: idp-system-ebanda-dev
+  definition:
+    $text: ./src/main/resources/META-INF/openapi.yaml
